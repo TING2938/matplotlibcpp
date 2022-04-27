@@ -35,7 +35,7 @@ int main()
 }
 ```
 
-## pybind11 build which cmake
+## pybind11 build with cmake
 
 - project tree
 ```bash
