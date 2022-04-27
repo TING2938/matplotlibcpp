@@ -23,13 +23,13 @@ private:
     }
 
 public:
-    PLT(const std::string& backend = "")
+    PLT(const std::string& backend = "", bool need_init_python = true)
     {
         if (PLT::plt_count != 0) {
             throw std::runtime_error("plt_count: " + std::to_string(PLT::plt_count));
         }
         PLT::plt_count++;
-        this->modules.init(backend);
+        this->modules.init(backend, need_init_python);
     }
 
     ~PLT()
