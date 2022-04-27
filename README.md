@@ -1,6 +1,76 @@
 # C++ binding for Python matplotlib
 
 
+# ***deprecated*** Please use [Pybind11](https://github.com/pybind/pybind11) for plotting, see example below:
+
+```c++
+// demo.cpp
+
+#include <pybind11/embed.h>
+#include <pybind11/stl.h>
+
+namespace py = pybind11;
+using namespace pybind11::literals;
+
+void matplotlib_example()
+{
+    py::scoped_interpreter guard;
+
+    auto plt           = py::module_::import("matplotlib.pyplot");
+    std::vector<int> x = {1, 2, 3};
+    std::vector<int> y = {3, 2, 5};
+
+    py::tuple subplots = plt.attr("subplots")(2, 1, "figsize"_a = py::make_tuple(10, 8));
+    auto fig      = subplots[0];
+    py::tuple ax  = subplots[1];
+
+    ax[0].attr("plot")(x, y, "--ob");
+    ax[1].attr("plot")(x, y, ":or");
+    plt.attr("show")();
+}
+
+int main()
+{
+    matplotlib_example();
+}
+```
+
+## pybind11 build which cmake
+
+- project tree
+```bash
+.
+|-- CMakeLists.txt
+|-- demo
+|   `-- demo.cpp
+`-- pybind11
+```
+
+- CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.11)
+project(pybind11_demo)
+
+add_subdirectory(pybind11)
+
+add_executable(demo demo/demo.cpp)
+target_link_libraries(demo pybind11::embed)
+```
+
+- build 
+```bash
+mkdir build
+cd build 
+cmake ..
+make
+```
+
+---
+---
+---
+
+
 ## How to use 
 
 1. basic example
