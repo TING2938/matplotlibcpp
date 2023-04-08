@@ -9,3 +9,4 @@ find_package(Python3 COMPONENTS NumPy Interpreter Development REQUIRED)
 include_directories(${Python3_INCLUDE_DIRS})
 
 add_subdirectory(demo)
+add_subdirectory(demo_pybind11)

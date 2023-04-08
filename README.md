@@ -1,10 +1,10 @@
 # C++ binding for Python matplotlib
 
 
-# ***deprecated*** Please use [Pybind11](https://github.com/pybind/pybind11) for plotting, see example below:
+# ***deprecated*** Please use [Pybind11](https://github.com/pybind/pybind11) for plotting, see [example](demo_pybind11) below:
 
 ```c++
-// demo.cpp
+// demo_pybind11/demo_pybind11.cpp
 
 #include <pybind11/embed.h>
 #include <pybind11/stl.h>
@@ -37,29 +37,27 @@ int main()
 
 ## pybind11 build with cmake
 
-- project tree
-```bash
-.
-|-- CMakeLists.txt
-|-- demo
-|   `-- demo.cpp
-`-- pybind11
-```
-
 - CMakeLists.txt
 
 ```cmake
 cmake_minimum_required(VERSION 3.11)
-project(pybind11_demo)
+project(demo_pybind11)
 
-add_subdirectory(pybind11)
+include(FetchContent)
 
-add_executable(demo demo/demo.cpp)
-target_link_libraries(demo pybind11::embed)
+FetchContent_Declare(
+    pybind11
+    URL https://github.com/pybind/pybind11/archive/refs/tags/v2.10.0.tar.gz
+)
+FetchContent_MakeAvailable(pybind11)
+
+add_executable(demo_pybind11 demo_pybind11.cpp)
+target_link_libraries(demo_pybind11 pybind11::embed)
 ```
 
 - build 
 ```bash
+cd demo_pybind11
 mkdir build
 cd build 
 cmake ..
